@@ -1,12 +1,9 @@
-Este repositório contém os materiais necessários para acompanhar o livro "Dominando o R: do Zero à Elaboração de Estudos Socioeconômicos". Inclui os arquivos .rmd e as bases de dados utilizadas no livro.
+Este repositório contém os recursos necessários para acompanhar o guia "Dominando o R: do Zero à Elaboração de Estudos Socioeconômicos". Aqui você encontrará os arquivos .rmd e as bases de dados utilizadas ao longo do conteúdo.
 
-Sobre o Livro
-"Dominando o R: do Zero à Elaboração de Estudos Socioeconômicos" é um livro cuidadosamente elaborado para proporcionar aos leitores uma introdução prática ao R, destacando sua aplicação na análise de dados relacionados a aspectos sociais e econômicos.
+O guia foi elaborado com cuidado para oferecer aos leitores uma introdução prática ao R, enfatizando sua aplicação na análise de dados relacionados a aspectos sociais e econômicos. É uma ferramenta valiosa tanto para iniciantes quanto para aqueles que buscam aprimorar suas habilidades de análise de dados utilizando o R.
 
-O livro é uma ferramenta valiosa tanto para iniciantes quanto para aqueles que desejam aprimorar suas habilidades de análise de dados usando o R. 
+O acesso ao guia é gratuito para assinantes do Kindle Unlimited ou pode ser adquirido por $7,99 para não assinantes.
 
-O livro está disponibilizado gratuitamente para assinantes do Kindle Unlimited ou pode ser adquirido por $7,99 para não assinantes.
+Se surgirem dúvidas ou se você tiver sugestões, sinta-se à vontade para entrar em contato.
 
-Se você tiver alguma dúvida ou sugestão, não hesite em entrar em contato.
-
-Bons estudos!
+Aproveite os recursos e bons estudos!
