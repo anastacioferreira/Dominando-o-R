@@ -1,0 +1,1532 @@
+---
+title: "Dominando o R"
+author: "Anastácio Ferreira"
+date: "2024-02-09"
+output: html_document
+---
+
+2.            RMarkdown
+```{r}
+data(iris)
+```
+
+```{r}
+data()
+```
+
+```{r}
+# Atribuir o conjunto de dados a uma variável
+meu_iris <- iris
+```
+
+```{r}
+# Para obter ajuda sobre o pacote datasets
+help(datasets)
+
+ # Para obter ajuda sobre o conjunto de dados iris
+?iris
+```
+
+```{r}
+help(points)
+# ou
+?points
+```
+
+```{r}
+saveRDS(meu_iris, file = "meu_iris.rds")
+```
+
+```{r}
+getwd()
+```
+
+```{r}
+# Substitua "C:/Caminho/Para/Seu/Novo/Diretorio" pelo caminho desejado
+setwd("C:/Caminho/Para/Seu/Novo/Diretorio")
+```
+
+```{r}
+meu_iris_recuperado <- readRDS("meu_iris.rds")
+```
+
+```{r}
+ls()
+# ou
+objetos_no_ambiente <- ls()
+```
+
+```{r}
+# Criando um objeto chamado "meu_objeto"
+meu_objeto <- c(1, 2, 3, 4, 5)
+
+# Excluindo o objeto
+rm(meu_objeto)
+```
+
+```{r}
+rm(list = ls())
+```
+
+```{r, eval=FALSE}
+summary(iris)
+```
+
+
+3.            Tipos de Dados em R
+```{r}
+# Limpar ambiente
+rm(list = ls())
+```
+
+3.1.
+```{r}
+idade <- 25
+pi <- 3.14
+```
+
+```{r}
+idade
+pi
+```
+
+3.2.
+```{r}
+nome <- "Maria"
+cidade <- 'São Paulo'
+```
+
+3.3.
+```{r}
+genero <- factor(c("Masculino", "Feminino", "Masculino"))
+```
+
+3.4. 
+```{r}
+notas <- c(85, 90, 78, 92, 88)
+```
+
+3.5.
+```{r}
+matriz <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2, ncol = 3)
+```
+
+3.6.
+```{r}
+dados <- data.frame(
+  Nome = c("Ana", "Carlos", "Mariana"),
+  Idade = c(28, 35, 30),
+  Nota = c(90, 85, 88) )
+```
+
+```{r}
+View(matriz)
+View(dados)
+```
+
+
+4.            Operadores Aritméticos e Lógicos
+```{r}
+# Limpar ambiente
+rm(list = ls())
+```
+
+4.1.
+4.1.1.
+```{r}
+soma <- 5 + 3
+```
+
+4.1.2.
+```{r}
+diferenca <- 10 - 4
+```
+
+4.1.3.
+```{r}
+produto <- 3 * 6
+```
+
+4.1.4.
+```{r}
+quociente <- 15 / 3
+```
+
+4.1.5.
+```{r}
+exponenciacao <- 2^3
+```
+
+4.1.6.
+```{r}
+resto <- 10 %% 3
+```
+
+4.2.
+4.2.1.
+```{r}
+resultado <- (5 == 5)
+```
+
+4.2.2.
+```{r}
+resultado <- (10 != 10)
+```
+
+4.2.3.
+```{r}
+resultado <- (8 > 5)
+```
+
+4.2.4.
+```{r}
+resultado <- (3 < 7)
+```
+
+4.2.5.
+```{r}
+resultado <- (10 >= 8)
+```
+
+4.2.6.
+```{r}
+resultado <- (8 <= 5)
+```
+
+4.2.7.
+4.2.7.1.
+```{r}
+condicao1 <- TRUE
+condicao2 <- FALSE
+resultado1 <- condicao1 & condicao2
+```
+
+4.2.7.2.
+```{r}
+resultado2 <- condicao1 && condicao2
+```
+
+4.2.8.
+4.2.8.1
+```{r}
+condicao1 <- TRUE
+condicao2 <- FALSE
+resultado1 <- condicao1 | condicao2
+```
+
+4.2.8.2.
+```{r}
+resultado2 <- condicao1 || condicao2
+```
+
+4.2.9.
+```{r}
+condicao <- TRUE
+resultado <- !condicao
+```
+
+```{r}
+# Vetor de números
+numeros <- c(10, 5, 20, 8, 15)
+
+# Verificando quais números NÃO são maiores que 15
+nao_maiores_que_15 <- numeros <= 15
+```
+
+
+5.            Funções Aritméticas e Matemáticas
+5.1
+```{r}
+# Limpar ambiente
+rm(list = ls()) 
+
+#Vetor de números
+valores <- c(2, 4, 2, 8, 4, 10, 2)
+
+soma <- sum(valores)
+```
+
+5.2.
+```{r}
+media <- mean(valores)
+```
+
+5.3.
+```{r}
+comprimento <- length(valores)
+```
+
+5.4.
+```{r}
+numeros_ordenados <- sort(valores)
+```
+
+5.5.
+```{r}
+valores_unicos <- unique(valores)
+```
+
+5.6.
+```{r}
+numero <- 25
+
+raiz_quadrada <- sqrt(numero)
+```
+
+5.7.
+```{r}
+logaritmo <- log(numero)
+```
+
+5.8.
+```{r}
+valor <- -15
+
+absoluto <- abs(valor)
+```
+
+
+Extra
+```{r}
+# Criando um conjunto de dados fictício
+dados_trabalho <- data.frame(
+  Nome = c("Ana", "Carlos", "Mariana", "Pedro", "Julia"),
+  Idade = c(28, 35, 30, 25, 32),
+  Salario = c(5000, 6000, 5500, 4800, 7000),
+  Cargo = c("Analista", "Gerente", "Analista", "Assistente", "Diretor"),
+  Experiencia_Anos = c(3, 8, 5, 2, 10) ) 
+
+ # Utilizando as funções de manipulação de dados
+media_salarios <- mean(dados_trabalho$Salario)
+numero_funcionarios <- length(dados_trabalho$Nome)
+dados_ordenados_por_idade <- dados_trabalho[order(dados_trabalho$Idade), ]
+cargos_unicos <- unique(dados_trabalho$Cargo)
+```
+
+
+6.            Estruturas de Controle
+6.1.
+```{r}
+# Limpar ambiente
+rm(list = ls()) 
+
+idade <- 18
+if (idade >= 18) {
+  cat("Você é maior de idade.\n")
+} else {
+  cat("Você é menor de idade.\n")
+  }
+```
+
+6.2.
+```{r}
+idade <- 25
+if (idade < 18) {
+  cat("Você é menor de idade.\n")
+} else if (idade >= 18 && idade <= 60) {
+  cat("Você é adulto.\n")
+}else {
+  cat("Você é idoso.\n")
+  }
+```
+
+6.3.
+```{r}
+for (i in 1:5) {
+  cat("Iteração:", i, "\n")
+  }
+```
+
+6.4.
+```{r}
+contador <- 1
+while (contador <= 5) {
+  cat("Iteração:", contador, "\n")
+contador <- contador + 1
+}
+```
+
+6.5.
+```{r}
+contador <- 1
+repeat {
+  cat("Iteração:", contador, "\n")
+contador <- contador + 1
+if (contador > 5) {
+  break # Termina o loop quando contador é maior que 5
+}
+}
+```
+
+6.6.
+```{r}
+dia_da_semana <- "quarta" 
+
+# Usando switch para selecionar ação com base no dia da semana
+mensagem <- switch(
+                    dia_da_semana,
+                    "segunda" = "Início da semana!",
+                    "terca" = "Dia de reuniões.",
+                    "quarta" = "Metade da semana.",
+                    "quinta" = "Próximo do final de semana.",
+                    "sexta" = "Sextou!",
+                    "sabado" = "Dia de descanso.",
+                    "domingo" = "Aproveite o domingo.",
+                    "Outro dia" # Valor padrão se nenhum caso coincidir
+                   ) 
+
+# Imprimindo a mensagem
+cat("Mensagem:", mensagem, "\n")
+```
+
+6.7.
+```{r}
+install.packages("foreach")
+```
+
+```{r}
+library(foreach)
+```
+
+```{r}
+install.packages(c("ggplot2", "dplyr", "tidyr"))
+```
+
+```{r}
+# Criando um vetor
+vetor_numerico <- c(2, 4, 6, 8, 10) 
+
+ # Usando foreach para iterar sobre o vetor
+foreach(valor = vetor_numerico) %do% {
+cat("Valor:", valor, "\n")
+}
+```
+
+
+7.            Funções de Análise Estatística
+```{r}
+rm(list = ls())
+
+dados <- data.frame(
+  Idade = c(25, 30, 35, 40, 45, 50, 55, 60),
+  Salario = c(5000, 6000, 5500, 7000, 8000, 7500, 9000, 9500),
+  Educacao = c("Ensino Médio", "Ensino Superior", "Ensino Médio", "Ensino Superior", "Ensino Médio", "Ensino Superior", "Ensino Médio", "Ensino Superior"),
+  Emprego = c("CLT", "Autônomo", "CLT", "Autônomo", "CLT", "Autônomo", "CLT", "CLT")
+)
+```
+
+7.1.
+```{r}
+# Média
+media_salario <- mean(dados$Salario) 
+
+# Mediana
+mediana_salario <- median(dados$Salario) 
+
+# Moda
+moda_salario <- table(dados$Salario)[which.max(table(dados$Salario))]
+```
+
+7.2.
+```{r}
+# Desvio Padrão
+desvio_padrao_salario <- sd(dados$Salario) 
+
+# IQR
+iqr_salario <- IQR(dados$Salario)
+```
+
+7.3.
+```{r}
+quartis <- quantile(dados$Idade, probs = c(0.25, 0.5, 0.75))
+```
+
+7.4.
+```{r}
+t_test_salario_genero <- t.test(dados$Salario ~ dados$Educacao)
+```
+
+7.5.
+```{r}
+# Criar tabela de continência
+tabela_contingencia <- table(dados$Educacao, dados$Emprego)
+ 
+# Teste Qui-Quadrado
+qui_quadrado_educacao <- chisq.test(tabela_contingencia)
+```
+
+7.6.
+```{r}
+variancia <- var(dados$Idade)
+```
+
+7.7.
+```{r}
+covariancia <- cov(dados$Idade, dados$Salario)
+```
+
+7.8.
+```{r}
+correlacao_idade_salario <- cor(dados$Idade, dados$Salario, method = "pearson")
+```
+
+7.9.
+```{r}
+resumo <- summary(dados$Idade)
+```
+
+8.            Funções de Manipulação de Strings
+8.1.
+```{r}
+# Limpar ambiente
+rm(list = ls()) 
+
+nome <- "João"
+sobrenome <- "Silva"
+nome_completo <- paste(nome, sobrenome, sep = " ")
+```
+
+8.2.
+```{r}
+frase <- "Manipulação de strings"
+parte <- substring(frase, first = 1, last = 11)
+```
+
+8.3.
+```{r}
+palavras <- c("R", "Python", "Java", "C++")
+indice_python <- grep("Python", palavras)
+```
+
+8.4.
+```{r}
+texto <- "Exemplo de TEXTO"
+texto_maiusculo <- toupper(texto)
+texto_minusculo <- tolower(texto)
+cat("Maiúsculas:", texto_maiusculo, "\n")
+cat("Minúsculas:", texto_minusculo, "\n")
+```
+
+8.5.
+```{r}
+frase <- "Manipulação de|Strings|no R"
+substrings <- strsplit(frase, split = "|", fixed = TRUE)
+```
+
+8.6.
+```{r}
+texto <- "Carla, eu te amo! Carla, você é a mulher da minha vida."
+texto_substituido <- gsub("Carla", "Ana", texto)
+```
+
+8.7.
+```{r}
+palavra <- "RStudio"
+comprimento <- nchar(palavra)
+```
+
+8.8.
+```{r}
+library(stringr)
+
+texto <- " Espaços removidos "
+texto_trimmed <- str_trim(texto)
+```
+
+Extra
+```{r}
+# Criando um data frame fictício
+dados_educacionais <- data.frame(
+	Escola = c("Escola A", "Escola B", "Escola C"),
+	Nome_responsavel = c("João", "Maria", "Carlos"),
+	Sobrenome_responsavel = c("Silva", "Santos", "Oliveira"),
+	Estado = c("mg - Minas Gerais", "rj - Rio de Janeiro", "mg - Minas Gerais")
+	) 
+
+# Criar uma nova coluna com nome completo do responsável
+dados_educacionais$Nome_Completo_Responsavel <- paste(dados_educacionais$Nome_responsavel, dados_educacionais$Sobrenome_responsavel, sep = " ")
+
+# Utilizando substring() para extrair o estado da escola
+dados_educacionais$Estado_Abreviado <- substring(dados_educacionais$Estado, first = 1, last = 2) 
+# Transformar coluna Estado abreviado para letras maiúsculas
+dados_educacionais$Estado_Abreviado <- toupper(dados_educacionais$Estado_Abreviado)
+
+# Visualizando o data frame resultante
+View(dados_educacionais)
+```
+
+
+9.            Operações com Vetores e Matrizes
+9.1.
+9.1.1
+```{r}
+# Limpar ambiente
+rm(list = ls()) 
+
+vetor1 <- c(2, 4, 6)
+vetor2 <- c(1, 3, 5) 
+
+soma <- vetor1 + vetor2
+subtracao <- vetor1 - vetor2
+```
+
+9.1.2.
+```{r}
+produto_escalar <- sum(vetor1 * vetor2)
+```
+
+9.1.3.
+```{r}
+vetor <- c(3, 6, 9)
+escalar <- 2
+
+multiplicacao <- vetor * escalar
+divisao <- vetor / escalar
+```
+
+9.2
+9.2.1.
+```{r}
+matriz1 <- matrix(c(1, 2, 3, 4), nrow = 2)
+matriz2 <- matrix(c(5, 6, 7, 8), nrow = 2)
+ 
+soma_matrizes <- matriz1 + matriz2
+subtracao_matrizes <- matriz1 - matriz2
+```
+
+9.2.2.
+```{r}
+multiplicacao_matrizes <- matriz1 %*% matriz2
+```
+
+9.2.3.
+```{r}
+matriz <- matrix(c(1, 2, 3, 4), nrow = 2) 
+
+matriz_transposta <- t(matriz)
+```
+
+
+10.            Funções de Gráficos
+10.1.
+```{r}
+# Limpar ambiente
+rm(list = ls()) 
+
+# Dados de exemplo
+idade <- c(25, 30, 35, 40, 45)
+salario <- c(3500, 4000, 4500, 5000, 5500)
+
+# Criar um gráfico de dispersão
+plot(idade, salario, col = "blue", pch = 16, main = "Gráfico de Dispersão", xlab = "Idade", ylab = "Salário")
+```
+
+10.2.
+```{r}
+# Dados de exemplo
+notas <- c(75, 82, 90, 68, 78, 88, 95, 72, 85, 92) 
+
+# Criar um histograma
+hist(notas, main = "Histograma de Notas", xlab = "Notas", ylab = "Frequência")
+```
+
+10.3.
+
+
+```{r}
+# Dados de exemplo
+x <- c(1, 2, 3, 4, 5)
+y <- c(1, 3, 5, 7, 9)
+
+# Inicializar o gráfico usando plot()
+plot(x, y, type = "n")
+
+# Adicionar uma linha conectando os pontos
+lines(x, y, col = "red", lty = 2, lwd = 2)
+```
+
+10.4.
+```{r}
+# Dados de exemplo
+categorias <- c("A", "B", "C", "D")
+valores <- c(30, 45, 20, 35) 
+
+# Criar um gráfico de barras
+barplot(valores, names.arg = categorias, main = "Gráfico de Barras", xlab = "Categorias", ylab = "Valores")
+```
+
+10.5.
+```{r}
+# Dados de exemplo
+fatias <- c(25, 40, 15, 20)
+rotulos <- c("A", "B", "C", "D")
+
+# Configurar o tamanho do gráfico
+plot(1, type = "n", xlab = "", ylab = "", xlim = c(0, 2), ylim = c(0, 2))
+
+# Criar um gráfico de pizza
+pie(fatias, labels = rotulos, main = "Gráfico de Pizza")
+```
+
+10.6.
+```{r}
+# Dados de exemplo
+grupo1 <- c(60, 75, 82, 88, 95)
+grupo2 <- c(72, 78, 85, 90, 92) 
+
+# Criar um gráfico de caixa
+boxplot(grupo1, grupo2, names = c("Grupo 1", "Grupo 2"), main = "Gráfico de Caixa", ylab = "Notas")
+```
+
+10.7.
+```{r}
+# Criando dados para o exemplo
+x <- c(1, 2, 3, 4, 5)
+y <- c(3, 5, 7, 9, 11)
+
+# Abra o dispositivo gráfico antes de criar o gráfico
+grDevices::png(file = "grafico_dispersao.png")
+
+# Criando o gráfico de dispersão
+plot(x, y, main = "Gráfico de Dispersão", xlab = "Eixo X", ylab = "Eixo Y", pch = 16, col = "blue") 
+
+# Adicionando uma linha de tendência linear
+abline(lm(y ~ x), col = "red") 
+
+# Fechar o dispositivo gráfico após a conclusão do gráfico
+dev.off()
+```
+
+```{r}
+# Salvar como PDF
+grDevices::dev.copy2pdf(file = "grafico_dispersao.pdf") 
+
+#Salvar como JPEG
+grDevices::jpeg(file = "grafico_dispersao.jpeg") 
+
+#Salvar como SVG:
+grDevices::svg(file = "grafico_dispersao.svg")
+```
+
+10.8.
+```{r}
+library(ggplot2) 
+
+# Criando um data frame de exemplo
+dados <- data.frame(
+	Grupo = rep(c("A", "B"), each = 50),
+	Variavel1 = rnorm(100),
+	Variavel2 = rnorm(100, mean = 2)
+	) 
+ # Criando um gráfico de dispersão com barras de erro
+grafico <- ggplot(dados, aes(x = Grupo, y = Variavel1, color = Grupo)) +
+	geom_point() +
+	geom_errorbar(aes(ymin = Variavel1 - sd(Variavel1),ymax = Variavel1 + sd(Variavel1)), width = 0.2) +  
+	labs(title = "Gráfico de Dispersão com Barras de Erro",       
+		x = "Grupo",
+		y = "Variável 1",
+		color = "Grupo") +  
+	theme_minimal() 
+
+# Exibindo o gráfico
+print(grafico)
+```
+
+
+11.            Definindo Funções Próprias
+```{r}
+nome_da_funcao <- function(argumento1, argumento2, ...) {
+# Corpo da função
+}
+```
+
+11.1
+```{r}
+# Limpar ambiente
+rm(list = ls())
+
+calcular_media_renda <- function(rendas) {
+	media <- mean(rendas)
+	return(media) }
+```
+
+```{r}
+rendas_familia <- c(3500, 4200, 4800, 5500, 6000)
+media_renda_total <- calcular_media_renda(rendas_familia)
+```
+
+11.2.
+```{r}
+classificar_faixa_renda <- function(renda) {
+  if (renda < 4000) {
+    faixa <- "Baixa Renda"
+  } else if (renda < 8000) {
+    faixa <- "Média Renda"
+  } else {
+    faixa <- "Alta Renda"
+  }
+  return(faixa)
+}
+
+
+ # Uso da função
+faixa_familia <- classificar_faixa_renda(5200)
+```
+
+11.3.
+```{r}
+analise_despesas <- function(despesas_mensais) {
+	total_gasto <- sum(despesas_mensais)
+	media_gasto <- mean(despesas_mensais)
+	resultado <- list(total_gasto = total_gasto, media_gasto = media_gasto)
+	return(resultado)
+}
+
+# Uso da função
+despesas_familia <- c(1200, 1500, 800, 2000, 600)
+analise_resultado <- analise_despesas(despesas_familia)
+cat("Total Gasto:", analise_resultado$total_gasto, "reais\n")
+cat("Média de Gasto:", analise_resultado$media_gasto, "reais\n")
+```
+
+
+12.            Adicionando Dados
+12.1.
+```{r}
+# Limpar ambiente
+rm(list = ls()) 
+
+library(readr)
+dados_delimitados <- read_delim("caminho/do/arquivo/seu_arquivo.txt", delim = "\t")
+```
+
+```{r}
+dados_delimitados <- read_delim("seu_arquivo.txt", delim = "\t")
+```
+
+```{r}
+dados_delimitados <- read_delim("https://exemplo.com/seu_arquivo.txt", delim = "\t")
+```
+12.2.
+```{r}
+library(readxl) 
+dados_excel1 <- read_excel("caminho/do/arquivo/seu_arquivo.xlsx")
+```
+
+```{r}
+dados_excel <- read_excel("caminho/do/arquivo/seu_arquivo.xls")
+```
+
+12.3.
+```{r}
+dados <- readRDS("caminho/do/arquivo/seu_arquivo.rds")
+```
+
+12.4.
+```{r}
+load("caminho/do/arquivo/seu_arquivo.RData")
+```
+
+12.5.
+```{r}
+library(hdf5)
+arquivo_hdf5 <- h5file("caminho/do/arquivo/seu_arquivo.h5", "r")
+```
+
+12.6.
+```{r}
+library(ncdf4)
+arquivo_netcdf <- nc_open("caminho/do/arquivo/seu_arquivo.nc")
+```
+
+12.7.
+```{r}
+library(jsonlite)
+dados_json <- fromJSON("caminho/do/arquivo/seu_arquivo.json")
+```
+
+12.8.
+```{r}
+library(xml2)
+doc_xml <- read_xml("caminho/do/arquivo/seu_arquivo.xml")
+```
+
+```{r}
+elementos <- xml_find_all(doc_xml, "//nome_da_tag")
+```
+
+12.9.
+```{r}
+library(feather)
+dados_feather <- read_feather("caminho/do/arquivo/seu_arquivo.feather")
+```
+
+12.10.
+```{r}
+library(haven)
+dados_sas <- read_sas("caminho/do/arquivo.sas7bdat")
+```
+
+12.11.
+```{r}
+library(haven)
+dados_stata <- read_dta("caminho/do/arquivo/seu_arquivo.dta")
+```
+
+12.12.
+12.12.1.
+```{r}
+library(googledrive) 
+
+drive_auth() 
+
+# Localizar o arquivo no Google Drive
+arquivo_drive <- drive_find("Seu_Arquivo.csv") 
+
+# Download do Arquivo
+dados <- read.csv(text = drive_download(arquivo_drive))
+```
+
+12.12.2.
+```{r}
+library(rdrop2) 
+
+drop_auth()
+```
+
+```{r}
+# Puxar o arquivo do Dropbox
+arquivo_drop <- drop_get("Seu_Arquivo.csv", path = "caminho/local/no/seu/computador/Seu_Arquivo.csv") 
+
+# Carregar o arquivo no ambiente de trabalho do R
+dados <- read.csv(arquivo_drop)
+```
+
+12.12.3.
+```{r}
+library(PNADcIBGE)
+dados <- get_pnadc(year=2019, interview=1, vars = c("VD4002", "VD4007", "VD4016"), design = FALSE)
+```
+
+```{r}
+library(dplyr) 
+ 
+# Filtrar apenas pessoas ocupadas
+dados_ocupados <- dados %>% filter(VD4002 == "Pessoas ocupadas") 
+
+# Agrupar os dados pela posição na ocupação (VD4007) e calcular a média do rendimento mensal (VD4016)
+resultado <- dados_ocupados %>%   
+  group_by(VD4007) %>%  
+  summarise(media_rendimento = mean(VD4016, na.rm = TRUE))
+
+# Exibir o resultado
+print(resultado)
+```
+
+
+13.            Manipulação de Colunas
+```{r}
+# Limpar ambiente
+rm(list = ls())
+
+# Criando o data frame de exemplo
+dados <- data.frame(
+	Nome = c("João", "Maria", "Carlos", "Ana"),
+	Idade = c(25, 30, 22, 28),
+	Altura = c(1.75, 1.68, 1.80, 1.62),
+	Salario = c(4500, 3800, 5000, 4200),
+	Outra_Coluna = c(10, 15, 20, 25)
+	)
+```
+
+13.1.
+13.1.1.
+```{r}
+# Selecionando coluna "Nome"
+dados_selecionados1 <- dados$Nome 
+
+# Selecionando colunas "Nome" e "Idade"
+dados_selecionados2 <- dados[, c("Nome", "Idade")]
+```
+
+```{r}
+# Selecionando a primeira coluna (Nome)
+dados_selecionados3 <- dados[, 1] 
+
+# Selecionando as colunas de índice um (Nome) e dois  (Idade)
+dados_selecionados4 <- dados[, c(1, 2)]
+```
+
+```{r}
+dados_selecionados_intervalo <- dados[, 1:2]
+```
+
+13.1.2.
+```{r}
+# Filtrando o data frame usando a função subset
+dados_filtrados_subset1 <- subset(dados, select = c(Salario, Outra_Coluna), subset = Salario > 4000)
+```
+
+```{r}
+# Selecionar apenas coluna 2 (Idade)
+dados_filtrados_subset2 <- subset(dados, select = 2)
+```
+
+```{r}
+# Filtrando o data frame usando a função subset com condição
+dados_filtrados_subset3 <- subset(dados, subset = Salario > 4000, select = 2)
+```
+
+13.1.3.
+```{r}
+library(dplyr) 
+
+# Selecionar as colunas "Nome" e "Salario"
+dados_selecionados_dplyr1 <- select(dados, Nome, Salario)
+```
+
+```{r}
+# Selecionar a segunda e terceira colunas
+dados_selecionados_dplyr2 <- select(dados, 2:3)
+```
+
+13.1.4.
+```{r}
+library(data.table) 
+
+# Selecionar as colunas "Idade" e "Altura"
+dados_dt <- as.data.table(dados)
+dados_selecionados_table1 <- dados_dt[, .(Idade, Altura)]
+```
+
+```{r}
+# Selecionar a segunda coluna com data.table
+dados_dt <- as.data.table(dados)
+dados_selecionados_table2 <- dados_dt[, 2, with = FALSE]
+```
+
+13.2.
+```{r}
+# Adicionar uma nova coluna chamada "Peso" ao data frame "dados"
+dados$Peso <- c(70, 65, 80, 55)
+```
+
+13.2.1
+```{r}
+library(dplyr) 
+
+# Criar uma nova variável chamada "Idade_Quadrada"
+dados <- mutate(dados, Idade_Quadrada = Idade^2)
+```
+
+13.2.2.
+```{r}
+# Criar uma nova variável chamada "idade_quadrado" apenas no resultado final
+dados_Idade_Quadrada <- transmute(dados, Idade_Quadrada = Idade^2)
+```
+
+13.2.3.
+```{r}
+# Criar uma variável categórica "Faixa_Etaria" com base na idade
+dados$Faixa_Etaria <- ifelse(dados$Idade < 30, "Jovem", "Adulto")
+```
+
+13.2.4.
+```{r}
+library(dplyr) 
+
+# Criar uma variável categórica "Faixa_Etaria" usando case_when
+dados <- mutate(dados, Faixa_Etaria = case_when(
+	Idade < 30 ~ "Jovem",
+	Idade >= 30 & Idade < 60 ~ "Adulto",
+	Idade >= 60 ~ "Idoso"
+	))
+```
+
+13.2.5.
+```{r}
+library(dplyr) 
+
+# Criar uma variável binária "Maior_de_Idade"
+dados <- mutate(dados, Maior_de_Idade = if_else(Idade >= 18, TRUE, FALSE))
+```
+
+13.3.
+```{r}
+# Corrigindo informações da coluna chamada "Peso" do data frame "dados"
+dados$Peso <- c(71, 67, 78, 55)
+```
+
+```{r}
+# Criando coluna chamada "Pesp" no data frame "dados" 
+dados$Pesp <- c(71, 67, 78, 57)
+```
+
+13.4.
+```{r}
+# Excluindo a coluna "Peso"
+dados$Peso <- NULL
+
+#Renomeando "Pesp" para "Peso"
+colnames(dados)[colnames(dados) == "Pesp"] <- "Peso"
+```
+
+13.4.1.
+```{r}
+# Criando variável
+dados$variavel_indesejada <- c(1, 2, 3, 4) 
+
+# Remover a coluna "variavel_indesejada"
+dados <- dados[, -which(names(dados) == "variavel_indesejada")]
+```
+
+13.4.2.
+```{r}
+library(dplyr) 
+
+# Criando variável
+dados$variavel_indesejada <- c(1, 2, 3, 4) 
+
+# Remover a coluna "variavel_indesejada"
+dados <- select(dados, -variavel_indesejada)
+```
+
+13.4.3.
+```{r}
+# Criando variável
+dados$variavel_indesejada <- c(1, 2, 3, 4) 
+
+# Remover a coluna "variavel_indesejada" usando subset
+dados <- subset(dados, select = -variavel_indesejada)
+```
+
+13.4.4.
+```{r}
+library(data.table) 
+
+# Criando variável
+dados$variavel_indesejada <- c(1, 2, 3, 4) 
+
+# Remover a coluna "variavel_indesejada" com data.table
+setDT(dados)[, variavel_indesejada := NULL]
+```
+
+13.5.
+```{r}
+colnames(dados) <- c("N", "I", "A", "S", "O", "Q", "F", "M", "P")
+```
+
+```{r}
+colnames(dados)[colnames(dados) == "N"] <- "Nome"
+```
+
+
+14.            Manipulação de Linhas
+```{r}
+# Limpar ambiente
+rm(list = ls())
+ 
+# Criando o data frame de exemplo
+dados <- data.frame(
+	Nome = c("João", "Maria", "Carlos", "Ana"),
+	Idade = c(25, 30, 22, 28),
+	Altura = c(1.75, 1.68, 1.80, 1.62),
+	Salario = c(4500, 3800, 5000, 4200),
+	Outra_Coluna = c(10, 15, 20, 25)
+	)
+```
+
+14.1.
+```{r}
+dados_selecionados <- dados[dados$Idade > 28, ]
+```
+
+```{r}
+dados_selecionados_subset <- subset(dados, Salario > 4300)
+```
+
+```{r}
+linha_selecionada <- dados[3, ]
+```
+
+14.2.
+```{r}
+dados <- dados[dados$Idade > 28, ]
+```
+
+```{r}
+dados <- dados[-3, ]
+```
+
+```{r}
+library(dplyr)
+dados <- slice(dados, -2)
+```
+
+14.3.
+```{r}
+# Criar um novo dado
+nova_linha <- data.frame(Nome = "Joana", Idade = 25,  Altura = 1.55, Salario = 6000, Outra_Coluna = 30) 
+
+# Adicionar a nova linha aos dados existentes
+dados <- rbind(dados, nova_linha)
+```
+
+14.4.
+```{r}
+dados[2, "Salario"] <- 7000
+```
+
+```{r}
+dados[dados$Outra_Coluna >= 20, "Salario"] <- 6500
+```
+
+14.5.
+14.5.1
+```{r}
+library(dplyr) 
+
+# Ordenar dados pelo salário em ordem crescente
+dados_ordenados_crescente <- arrange(dados, Salario)
+```
+
+14.5.2
+```{r}
+# Ordenar dados pelo salário em ordem decrescente
+dados_ordenados_decrescente <- arrange(dados, desc(Salario))
+```
+
+14.5.3
+```{r}
+# Ordenar dados de forma aleatória
+dados_ordenados_aleatoriamente <- dados[sample(nrow(dados)), ]
+```
+
+
+15.            Principais Erros na Manipulação de Dados e como Evitá-los
+```{r}
+# Limpar ambiente
+rm(list = ls())
+ 
+ # Criando o data frame de exemplo
+dados <- data.frame(
+	Nome = c("João", "Maria", "Carlos", "Ana"),
+	Idade = c(25, 30, 22, 28),
+	Altura = c(1.75, 1.68, 1.80, 1.62),
+	Salario = c(4500, 3800, 5000, 4200),
+	Outra_Coluna = c(10, 15, 20, 25)
+	) 
+
+# Transformar a coluna "Nome" em fator (para um exercício)
+dados$Nome <- as.factor(dados$Nome)
+```
+
+15.1.
+```{r}
+# Criar uma cópia dos dados originais
+dados_backup <- dados
+```
+
+```{r}
+# Salvar os dados originais em um novo arquivo CSV
+write.csv(dados, "dados_backup_original.csv", row.names = FALSE)
+```
+
+15.2.
+15.2.1.
+```{r}
+# Exemplo incorreto
+dados$Idade <- dados$Idade + "5"
+```
+
+15.2.2.
+```{r}
+# Lista de transformações de variáveis
+numero_em_numeric <- as.numeric(numero_em_string)
+numero_em_inteiro <- as.integer(numero_em_string)
+numero_em_string <- as.character(numero)
+nomes_fator <- as.factor(nomes)
+data_em_date <- as.Date(data_em_string)
+numero_em_logico <- as.logical(numero)
+```
+
+```{r}
+# Converter coluna Nome para caractere
+dados$Nome <- as.character(dados$Nome) 
+
+# Ordenar coluna
+dados <- arrange(dados, Nome)
+```
+
+15.3.
+15.3.1
+```{r}
+valores <- c(1, 2, NA, 4, NA, 6)
+is_na_resultado <- is.na(valores)
+```
+
+15.3.2.
+```{r}
+letras <- data.frame(A = c(1, NA, 3), B = c(4, 5, 6))
+casos_completos <- complete.cases(letras)
+```
+
+15.3.3.
+```{r}
+letras_sem_na <- na.omit(letras)
+```
+
+15.4.
+15.4.1
+```{r}
+# Renomear colunas para fazer o exercício
+colnames(dados) <- c("Primeiro Nome", "Idade", "@Altura", "Salario", "Outra Coluna")
+
+colnames(dados) <- make.names(colnames(dados)) 
+
+colnames(dados)
+```
+
+15.4.2.
+```{r}
+# Renomear colunas para fazer o exercício
+colnames(dados) <- c("Primeiro Nome", "Idade", "@Altura", "Salario", "Outra Coluna")
+
+library(janitor)
+dados <- janitor::clean_names(dados)
+colnames(dados)
+```
+
+
+
+15.5.
+
+
+15.6.
+```{r}
+library(dplyr) 
+dados <- read.csv("seu_arquivo.csv")
+media_salario <- dados %>% summarize(media = mean(Salario, na.rm = TRUE))
+```
+
+15.7.
+
+
+16.            Análise Exploratória de Dados
+```{r}
+# Limpar ambiente
+rm(list = ls())
+
+dados <- data.frame(
+	Idade = c(30, 30, 35, 30, 45, 50, 55, 60),
+	Salario = c(5000, 6000, 5500, 7000, 8000, 7500, 9000, 9500),
+	Educacao = c("Ensino Médio", "Ensino Superior", "Ensino Médio", "Ensino Superior", "Doutorado", "Mestrado", "Ensino Médio", "Doutorado"),
+	Emprego = c("CLT", "Autônomo", "CLT", "Autônomo", "CLT", "Autônomo", "CLT", "CLT"),
+	Tempo = c(1, 2, 3, 4, 5, 6, 7, 8)
+	)
+```
+
+16.1.
+16.1.1.
+```{r}
+hist(dados$Idade, main = "Distribuição de Idade", xlab = "Idade", col = "skyblue", border = "black")
+```
+
+```{r}
+set.seed(123)
+
+par(mfrow = c(1, 3))  # Organiza os gráficos em uma única linha com três colunas 
+
+# Distribuição Normal
+dados_normal <- rnorm(1000, mean = 50, sd = 10)
+hist(dados_normal, main = "Normal", xlab = "Valores", col = "skyblue", border = "black") 
+
+# Distribuição Exponencial
+dados_exponencial <- rexp(1000, rate = 0.1)
+hist(dados_exponencial, main = "Exponencial", xlab = "Valores", col = "skyblue", border = "black") 
+
+# Distribuição Bimodal
+dados_bimodal <- c(rnorm(500, mean = 30, sd = 5), rnorm(500, mean = 70, sd = 10))
+hist(dados_bimodal, main = "Bimodal", xlab = "Valores", col = "skyblue", border = "black")
+```
+
+16.1.2.
+```{r}
+boxplot(dados$Salario ~ dados$Educacao, main = "Salário por Nível de Educação", xlab = "Nível de Educação", ylab = "Salário", col = "lightgreen", border = "brown")
+```
+
+16.2.
+16.2.1.
+```{r}
+# Boxplot de Salario
+boxplot(dados$Salario, main = "Salario", col = "lightblue", border = "blue") 
+
+# Scatter Plot de Salario por idade
+plot(dados$Idade, dados$Salario, main = "Renda por Idade", xlab = "Idade", ylab = "Renda", col = "orange")
+```
+
+16.2.2.
+```{r}
+library(outliers)
+outliers_renda <- outliers::dixon.test(dados$Salario)
+```
+
+16.2.3.           
+```{r}
+# Executar o teste de Grubbs
+resultado_grubbs <- outliers::grubbs.test(dados$Salario) 
+
+# Identificar o valor outlier
+outlier <- resultado_grubbs$outliers
+```
+
+16.3.
+16.3.1.
+```{r}
+plot(dados$Tempo, dados$Salario, type = "l", col = "purple", lwd = 2, main = "Salário ao Longo do Tempo", xlab = "Tempo", ylab = "Salário")
+```
+
+16.3.2.
+```{r}
+corr_matrix <- cor(dados[, c("Idade", "Salario", "Tempo")])
+heatmap(corr_matrix, col = colorRampPalette(c("red", "white", "blue"))(100), main = "Heatmap de Correlação")
+```
+
+16.4.
+```{r}
+library(tidyverse) 
+
+# Criando um data frame fictício
+set.seed(123)
+dados_na <- data.frame(
+  ID = 1:100,
+  Idade = sample(c(20:60, NA), 100, replace = TRUE),
+  Salario = sample(c(30000:80000, NA), 100, replace = TRUE),
+  Educacao = sample(c("Ensino Médio", "Graduação", "Pós-Graduação", NA), 100, replace = TRUE) )
+
+is_na_idade <- is.na(dados_na$Idade) 
+obs_completas <- complete.cases(dados_na)
+```
+```{r}
+colunas_com_NA <- colnames(dados_na)[colSums(is.na(dados_na)) > 0]
+```
+
+16.4.1.
+```{r}
+library(dplyr)
+library(tidyr)
+dados_exclusao <- dados_na %>%
+	drop_na()
+```
+
+16.4.2.
+```{r}
+dados_media <- dados_na %>%
+  mutate(Idade = ifelse(is.na(Idade), mean(Idade, na.rm = TRUE), Idade))
+```
+
+16.4.3.
+```{r}
+library(mice) 
+dados_mice <- mice(dados_na, method = "pmm", m = 5)
+dados_mice <- complete(dados_mice, action = "long")
+```
+
+```{r}
+# Criar data frame fictício
+set.seed(123)
+
+dados_mistos <- data.frame(
+  var_numerica = replace(rnorm(100), sample(100, 20), NA),
+  var_binaria = sample(c(0, 1, NA), 100, replace = TRUE),
+  var_categorica = as.factor(sample(c("A", "J", "T", NA), 100, replace = TRUE))
+  ) 
+
+# Imputação múltipla
+dados_mice <- mice(
+  dados_mistos,
+  method = c("pmm", "logreg", "polyreg"),
+  m = 5, maxit = 50
+  ) 
+
+# Obter conjunto de dados imputado
+dados_imputados <- complete(dados_mice, action = "long")
+```
+
+
+17.            Principais Modelos Econométricos
+```{r}
+# Limpar ambiente
+rm(list = ls()) 
+
+set.seed(123)
+dados <- data.frame(
+	y = rnorm(100, mean = 10, sd = 2),
+	y_binaria = sample(0:1, 100, replace = TRUE),
+	y_censurada = sample(0:1, 100, replace = TRUE),
+	x1 = rnorm(100, mean = 5, sd = 2),
+	x2 = rnorm(100, mean = 8, sd = 3),
+	x3 = rnorm(100, mean = 12, sd = 4),
+	tempo = rep(0:1, each = 50)
+	)
+```
+
+17.1.
+```{r}
+modelo_mqo <- lm(y ~ x1, data = dados)
+summary(modelo_mqo)
+```
+
+```{r}
+modelo_mqo <- lm(y ~ x1 + x2 + x3, data = dados)
+summary(modelo_mqo)
+```
+
+17.2.
+```{r}
+modelo_probit <- glm(y_binaria ~ x1 + x2, data = dados, family = binomial(link = "probit"))
+summary(modelo_probit)
+```
+
+17.3.
+```{r}
+library(censReg)
+
+modelo_tobit <- censReg(y_censurada ~ x1 + x2 + x3, left = 0, right = Inf, data = dados)
+summary(modelo_tobit)
+```
+
+17.4.
+```{r}
+modelo_logit <- glm(y_binaria ~ x1 + x2 + x3, data = dados, family = binomial(link = "logit"))
+summary(modelo_logit)
+```
+
+17.5.
+```{r}
+# Separar dados por grupo
+grupo_0 <- dados[dados$y_binaria == 0, ]
+grupo_1 <- dados[dados$y_binaria == 1, ] 
+
+# Realizar decomposição Oaxaca-Blinder
+modelo_grupo_0 <- lm(y ~ x1 + x2 + x3, data = grupo_0)
+modelo_grupo_1 <- lm(y ~ x1 + x2 + x3, data = grupo_1) 
+
+# Calcular diferenças nas médias e contribuições
+diferenca_medias <- mean(grupo_1$y) - mean(grupo_0$y)
+contribuicoes <- coef(modelo_grupo_1) - coef(modelo_grupo_0)
+```
+
+17.6.
+```{r}
+# Criando variável de interação entre tempo e tratamento
+dados$tratamento_tempo <- dados$y_binaria * dados$tempo 
+
+# Ajustando um modelo de regressão linear
+modelo_did <- lm(y ~ y_binaria + tempo + tratamento_tempo + x1 + x2 + x3, data = dados) 
+
+# Exibindo os resultados
+summary(modelo_did)
+```
+
+FIM DO SCRIPT
