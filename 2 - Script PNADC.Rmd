@@ -1,1 +1,279 @@
+---
+title: "PnadC"
+author: "Anastácio Ferreira"
+date: "2024-02-18"
+output: html_document
+---
 
+1. Baixar Dados
+```{r eval=FALSE}
+library(PNADcIBGE)
+dados <- get_pnadc(year=2022, interview=1, vars = c("UF", "RM_RIDE", "UPA", "V1008", "V1022", "V1032", "V2001", "V2007", "V2009", "V2010", "VD2002", "VD3004", "VD3005", "VD4003", "VD4009", "VD4010", "VD4016", "VD5001", "V4001", "V4028", "V4029", "V4032", "V4039", "V40401", "V40402", "V40403"), design = FALSE)
+```
+
+```{r eval=FALSE}
+# Manter apenas variáveis de interesse
+dados <- dados[, c("UF", "RM_RIDE", "UPA", "V1008", "V1022", "V1032", "V2001", "V2007", "V2009", "V2010", "VD2002", "VD3004", "VD3005", "VD4003", "VD4009", "VD4010", "VD4016", "VD5001", "V4001", "V4028", "V4029","V4032", "V4039", "V40401", "V40402", "V40403"), drop = FALSE]
+
+# Salvar arquivo
+write.table(dados, file = "pnadc_bruta.txt", sep = "\t", na = "", quote = TRUE)
+```
+
+```{r}
+dados <- read.delim("pnadc_bruta.txt", header=TRUE)
+```
+
+2. Dummies de Região
+```{r}
+dados$Nordeste <- ifelse(dados$UF %in% c("Maranhão", "Piauí", "Ceará", "Rio Grande do Norte", "Paraíba", "Pernambuco", "Alagoas", "Sergipe", "Bahia"), 1, 0) # grupo base
+
+dados$Norte <- ifelse(dados$UF %in% c("Rondônia", "Acre", "Amazonas", "Roraima", "Pará", "Amapá", "Tocantins"), 1, 0)
+
+dados$Sudeste <- ifelse(dados$UF %in% c("Minas Gerais", "Espírito Santo", "Rio de Janeiro", "São Paulo"), 1, 0)
+dados$Sul <- ifelse(dados$UF %in% c("Paraná", "Santa Catarina", "Rio Grande do Sul"), 1, 0)
+
+dados$Centro_Oeste <- ifelse(dados$UF %in% c("Mato Grosso do Sul", "Mato Grosso", "Goiás", "Distrito Federal"), 1, 0)
+```
+ 
+3. Dummy Região Metropolitana e Região Administrativa Integrada
+```{r}
+dados$RM_RIDE <- ifelse(!is.na(dados$RM_RIDE), 1, 0)
+```
+  
+4. Dummy de Morador de Área Urbana
+```{r}
+dados$V1022 <- ifelse(dados$V1022 == "Urbana", 1, 0)
+```
+  
+5. Dummy de Mulher
+```{r}
+dados$V2007 <- ifelse(dados$V2007 == "Mulher", 1, 0)
+```
+
+6. Dummy de Preto/Pardo
+```{r}
+dados$V2010 <- ifelse(dados$V2010 %in% c("Preta", "Parda"), 1, 0)
+```
+ 
+7. Dummies de Condição no Domicílio
+```{r}
+dados$CD0 <- ifelse(dados$VD2002 %in% c("Genro ou nora", "Pai, mãe, padrasto ou madrasta", "Sogro(a)", "Neto(a)", "Bisneto(a)", "Irmão ou irmã", "Avô ou avó", "Outro parente", "Agregado(a)", "Convivente", "Pensionista", "Empregado(a) doméstico(a)", "Parente do(a) empregado(a) doméstico(a)"), 1, 0) #grupo base
+
+dados$CD1 <- ifelse(dados$VD2002 == "Pessoa responsável", 1, 0)
+
+dados$CD2 <- ifelse(dados$VD2002 == "Cônjuge ou companheiro(a)", 1, 0)
+
+dados$CD3 <- ifelse(dados$VD2002 %in% c("Filho(a)", "04 Enteado(a)"), 1, 0)
+```
+ 
+8. Escolaridade
+```{r}
+dados$E0 <- ifelse(dados$VD3004 %in% c("Sem instrução e menos de 1 ano de estudo", "Fundamental incompleto ou equivalente"), 1, 0) #grupo base
+
+dados$E1 <- ifelse(dados$VD3004 %in% c("Fundamental completo ou equivalente", "Médio incompleto ou equivalente"), 1, 0)
+
+dados$E3 <- ifelse(dados$VD3004 %in% c("Médio completo ou equivalente", "Superior incompleto ou equivalente"), 1, 0)
+
+dados$E4 <- ifelse(dados$VD3004 %in% c("Superior completo"), 1, 0)
+```
+  
+9. Proxy de Experiência e experiência ao quadrado
+```{r}
+# Tranformar VD3005
+dados$VD3005 <- ifelse(dados$VD3005 == "Sem instrução e menos de 1 ano de estudo", 0, dados$VD3005)
+dados$VD3005 <- substring(dados$VD3005, first = 1, last = 2)
+```
+
+```{r}
+# Criar variáveis
+dados$V2009 <- as.numeric(dados$V2009)
+dados$VD3005 <- as.numeric(dados$VD3005)
+
+dados$Exp <- dados$V2009 - dados$VD3005 - 6  #Idade - anos de estudo - 6
+dados$Exp <- ifelse(dados$Exp < 0, 0, dados$Exp)
+dados$ExpQ <- dados$Exp ^ 2
+```
+
+10. Setores de Atividade
+```{r}
+dados$SA0 <- ifelse(dados$VD4010 == "Indústria geral", 1, 0) #grupo base
+dados$SA1 <- ifelse(dados$VD4010 == "Agricultura, pecuária, produção florestal, pesca e aquicultura", 1, 0)
+dados$SA2 <- ifelse(dados$VD4010 == "Construção", 1, 0)
+dados$SA3 <- ifelse(dados$VD4010 == "Comércio, reparação de veículos automotores e motocicletas", 1, 0)
+dados$SA4 <- ifelse(dados$VD4010 == "Transporte, armazenagem e correio ", 1, 0)
+dados$SA5 <- ifelse(dados$VD4010 == "Alojamento e alimentação ", 1, 0)
+dados$SA6 <- ifelse(dados$VD4010 == "Informação, comunicação e atividades financeiras, imobiliárias, profissionais e administrativas", 1, 0)
+dados$SA7 <- ifelse(dados$VD4010 == "Educação, saúde humana e serviços sociais", 1, 0)
+dados$SA8 <- ifelse(dados$VD4010 == "Outros Serviços", 1, 0)
+dados$SA9 <- ifelse(dados$VD4010 == "Serviços domésticos", 1, 0)
+```
+
+11. Rendimento/hora
+```{r}
+dados$VD4016 <- as.numeric(dados$VD4016)
+
+# Boxplot de rendimento
+boxplot(dados$VD4016, main = "Rendimento", col = "lightblue", border = "blue") 
+
+# Scatter Plot de rendimento por anos de estudo
+plot(dados$VD3005, dados$VD4016, main = "Rendimento por Ano de Estudo", xlab = "Anos de Estudo", ylab = "Rendimento", col = "orange")
+```
+
+```{r}
+dados <- subset(dados, VD4016 < 150000 | is.na(VD4016))
+```
+
+```{r}
+dados$V4039 <- as.numeric(dados$V4039)
+
+dados$Rend_hora <- dados$VD4016/4.33/dados$V4039
+
+dados$ln_Rend_hora <- log(dados$Rend_hora)
+dados$ln_Rend_hora <- replace(dados$ln_Rend_hora, is.na(dados$ln_Rend_hora), 0)
+```
+
+12.Renda domiciliar per capita de todas as fontes - exceto renda do indivíduo
+```{r}
+dados$VD5001 <- as.numeric(dados$VD5001)
+dados$V2001 <- as.numeric(dados$V2001)
+
+dados$Ren_dom_pc <- (dados$VD5001-dados$VD4016)/dados$V2001
+dados$Ren_dom_pc <- replace(dados$Ren_dom_pc, is.na(dados$Ren_dom_pc), 0)
+```
+
+13. Dummy de Trabalhador
+```{r}
+dados$V4001 <- ifelse(dados$V4001 == "Sim", 1, 0) 
+```  
+  
+14. Tempo Trabalhado no Mesmo Lugar (em anos)
+```{r}
+dados$V40401 <- as.numeric(dados$V40401)
+dados$V40402 <- as.numeric(dados$V40402)
+dados$V40403 <- as.numeric(dados$V40403)
+
+dados$Tempo <- ifelse(!is.na(dados$V40401), dados$V40401, "")
+dados$Tempo <- ifelse(!is.na(dados$V40402), dados$V40402 + 12, dados$Tempo)
+dados$Tempo <- ifelse(!is.na(dados$V40403), dados$V40403 * 12, dados$Tempo)
+
+dados$Tempo <- as.numeric(dados$Tempo)
+dados$Tempo <- dados$Tempo / 12
+dados$Tempo <- ifelse(is.na(dados$Tempo), 0, dados$Tempo)
+```
+  
+15. Dummy de existência de criança no domicílio
+```{r}
+library(dplyr)
+
+# Dummy para identificar crianças de até 10 anos
+dados <- dados %>%
+  mutate(crian = ifelse(V2009 <= 10, 1, 0)) #crian = indivíduo é criança de até 10 anos
+
+# Identificador de domicílio
+dados <- dados %>%
+  group_by(UPA, V1008) %>%
+  mutate(iddom = cur_group_id())
+
+# Identifique se indivíduo está em domicílio que possui criança de até 10 anos
+dados <- dados %>%
+  group_by(iddom) %>%
+  mutate(Crianca = max(crian))
+``` 
+    
+16. Corte de Observações
+```{r}
+dados <- subset (dados, V2009>= 16 & V2009 <= 65) #Corte de idade
+
+dados <- subset (dados, !(VD4009 %in% c("Empregado no setor público com carteira de trabalho assinada", "Empregado no setor público sem carteira de trabalho assinada", "Militar e servidor estatutário", "Empregador", "Conta-própria"))) #Corte de posição de ocupação
+
+dados$CP <- ifelse(dados$V4029 == "Sim" | dados$V4032 == "Sim", "Sim", "Não") #trabalhador possui carteira de trabalho ou contribui para a previdência
+dados <- subset(dados, !(CP == "Não" & V4001 == "1")) #remover trabalhadores sem carteira assinada ou que não contribuem para a previdência social (ou seja, trabalhadores informais)
+
+dados <- subset(dados, !(VD4010 %in% c("Administração pública, defesa e seguridade social", "Atividades mal definidas"))) # exclui esses grupamentos de atividades
+
+dados <- dados %>%
+  filter(VD4003 != "Pessoas fora da força de trabalho e fora da força de trabalho potencial")
+ #tira as pessoas fora da força de trabalho potencial
+```
+
+17. Análise Descritiva
+```{r}
+# Contagem da distribuição
+distribuicao <- table(dados$VD3005)
+
+# Criar gráfico de barras
+barplot(distribuicao, main = "Distribuição de Anos de Estudo", xlab = "Anos de Estudo", ylab = "Frequência")
+```
+
+```{r}
+media_por_grupo <- dados %>%
+  group_by(VD3005) %>%
+  summarise(Media_Rend_hora = mean(Rend_hora, na.rm = TRUE))
+colnames(media_por_grupo) <- c("Grupo", "Media_Rend_hora")
+
+barplot(media_por_grupo$Media_Rend_hora,
+         main = "Média de Rendimento por Anos de Estudo",
+         xlab = "Anos de Estudo",
+         ylab = "Média de Rendimento por Hora")
+```
+
+```{r}
+media_por_grupo2 <- dados %>%
+  group_by(VD3005, V2007) %>%
+  summarise(Media_Rend_hora = mean(Rend_hora, na.rm = TRUE))
+
+colnames(media_por_grupo2) <- c("Grupo", "Sexo", "Media_Rend_hora")
+
+# Criar um gráfico de barras empilhadas para comparar a média de rendimento por anos de estudo e sexo
+barplot(height = media_por_grupo2$Media_Rend_hora,
+        beside = TRUE,
+        main = "Média de Rendimento por Anos de Estudo e Sexo",
+        xlab = "Anos de Estudo",
+        ylab = "Média de Rendimento por Hora",
+        col = c("skyblue", "lightgreen"),
+        cex.main = 1)
+```
+
+18. Excluir Variáveis
+```{r}
+variaveis_para_excluir <- c( "UF", "UPA", "V1008", "V2009", "V2001", "V4039", "VD2002", "VD3004", "VD4003", "VD4009", "VD4010", "VD4016", "VD5001", "Rend_hora", "V4028", "V4029", "V4032", "V40401", "V40402", "V40403", "Nordeste", "E0", "CD0", "SA0", "crian", "CP")
+
+dados <- dados %>%
+  select(-one_of(variaveis_para_excluir))
+```
+
+19. Renomear Variáveis
+```{r}
+dados <- dados %>%
+  rename(Urb = V1022,
+         Reg_metr = RM_RIDE,
+         Peso = V1032,
+         Mulher = V2007,
+         Negro = V2010,
+         Estudo = VD3005,
+         Trabalha = V4001)
+```
+
+```{r}
+write.table(dados, file = "pnadc_limpa.txt", sep = "\t", na = "", quote = TRUE)
+```
+
+20.Regressão
+```{r}
+probit = glm(Trabalha ~ E1 + E3 + E4 + Exp + ExpQ + Negro + Mulher + Ren_dom_pc + CD1 + CD2 + CD3 + Crianca + Norte + Sudeste + Sul + Centro_Oeste + Urb + Reg_metr, binomial(link = "probit"),data = dados, weights = Peso)
+summary(probit)
+
+dados$arg_lambda = predict(probit) # Predict Linear
+
+dados$lambda = dnorm(dados$arg_lambda)/pnorm(dados$arg_lambda) #Inversa de Mills
+
+heckman = lm(ln_Rend_hora ~ + E1 + E3 + E4 + Exp + ExpQ + Negro + Mulher + CD1 + CD2 + CD3 + Crianca + Tempo + SA1 + SA2 + SA3 + SA4 + SA5 + SA6 + SA7 + SA8 + SA9 + Norte + Sudeste + Sul + Centro_Oeste + Reg_metr + Urb + lambda, data = dados, weights = Peso) #Heckit
+summary(heckman)  
+```
+
+21. Salvar Resultados
+```{r}
+library(stargazer)
+stargazer(probit, type = "html", out = ("Resultado_probit.html"))
+stargazer(heckman, type = "html", out = ("Resultado_heckman.html"))
+```
