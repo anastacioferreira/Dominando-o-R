@@ -1,0 +1,65 @@
+---
+title: "Script INEP"
+author: "Anastácio Ferreira"
+date: "2024-02-29"
+output: html_document
+---
+
+```{r}
+library(readxl)
+dados <- read_excel("divulgacao_ensino_medio_municipios_2021.xlsx")
+```
+
+```{r}
+library(dplyr)
+
+# Excluir linhas de 1 a 5
+dados <- slice(dados, -(1:8))
+
+#Renomear colunas
+colnames(dados) <- unlist(dados[1, ])
+
+# Remover a primeira linha do data frame
+dados <- dados[-1, ]
+```
+
+```{r}
+# Filtrar as observações com nome "Pública" na coluna REDE
+dados <- subset(dados, REDE == "Pública")
+
+# Filtrar as observações onde SG_UF é igual a "MG"
+dados <- subset(dados, SG_UF == "MG")
+```
+
+#Mapas
+```{r}
+library(geobr)
+library(sf)
+mun_mg <- read_municipality(code_muni=31, year=2018)
+```
+
+```{r}
+# Calcular o range da variável CO_MUNICIPIO
+range(dados$VL_OBSERVADO_2021)
+```
+
+```{r}
+# Transformar a coluna CO_MUNICIPIO em tipo numérico
+dados$CO_MUNICIPIO <- as.numeric(dados$CO_MUNICIPIO)
+dados$VL_OBSERVADO_2021 <- as.numeric(dados$VL_OBSERVADO_2021)
+
+#Juntar bases
+dataset = left_join(mun_mg, dados, by=c("code_muni"="CO_MUNICIPIO"))
+```
+
+```{r}
+library(ggplot2)
+
+ggplot() +
+  geom_sf(data = dataset, aes(fill = VL_OBSERVADO_2021), color = NA, size = 0.15) +
+  labs(title = "IDEB em MG", 
+       caption = NULL, size = 8) +
+  scale_fill_distiller(palette = "Greens", limits = c(0.0, 5.6), name = "Code_muni", na.value = "gray50") +
+  theme_minimal()
+#NAS em cinza
+```
