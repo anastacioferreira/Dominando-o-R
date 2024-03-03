@@ -1,5 +1,5 @@
 ---
-title: "Script INEP"
+title: "Script IDEB"
 author: "Anastácio Ferreira"
 date: "2024-02-29"
 output: html_document
