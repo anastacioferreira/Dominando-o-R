@@ -15,7 +15,7 @@ data()
 ```
 
 ```{r}
-# Atribuir o conjunto de dados a uma variável
+# Atribuir o conjunto de dados a um objeto
 meu_iris <- iris
 ```
 
