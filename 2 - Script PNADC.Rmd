@@ -171,7 +171,7 @@ dados <- dados %>%
 
 # Identificador de domicílio
 dados <- dados %>%
-  group_by(UPA, V1008) %>%
+  group_by(UPA, V1008, V1014) %>%
   mutate(iddom = cur_group_id())
 
 # Identifique se indivíduo está em domicílio que possui criança de até 10 anos
