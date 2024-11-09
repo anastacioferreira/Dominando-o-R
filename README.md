@@ -2,7 +2,7 @@ Este repositório contém os recursos necessários para acompanhar o guia "Domin
 
 O guia foi elaborado com cuidado para oferecer aos leitores uma introdução prática ao R, enfatizando sua aplicação na análise de dados relacionados a aspectos sociais e econômicos. É uma ferramenta valiosa tanto para iniciantes quanto para aqueles que buscam aprimorar suas habilidades de análise de dados utilizando o R.
 
-O acesso ao guia é gratuito para assinantes do Kindle Unlimited ou pode ser adquirido por $7,99 para não assinantes.
+O acesso ao guia é gratuito para assinantes do Kindle Unlimited ou pode ser adquirido por R$12,99 para não assinantes.
 
 Se surgirem dúvidas ou se você tiver sugestões, sinta-se à vontade para entrar em contato.
 
